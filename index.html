@@ -1,0 +1,134 @@
+    <html lang="en"><head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+            <style>
+                body,
+                html {
+                    margin: 0;
+                    padding: 0;
+                    animation: shift 20s linear infinite;
+                }
+
+                @keyframes shift {
+                    to {
+                        background-position: 0 -200%;
+                    }
+                }
+                body,
+                div,
+                html {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    row-gap: 10px;
+                }
+                
+                img {
+                    display: none;
+                }
+
+                p, h1,
+                button {
+                    font-family: "Comic Sans MS", "Roboto", sans-serif;
+                }
+
+                p {
+                    font-size: 24px;
+                    max-width: 75%;
+                }
+
+                h1 {
+                    font-size: 36px;
+                    font-weight: bold;
+                }
+
+                button {
+                    font-size: 24px;
+                    z-index: 99;
+                }
+
+                * {
+                    user-select: none;
+                }
+            </style>
+            <script src="script.js" defer></script>
+        <style type="text/css">#_copy{align-items:center;background:#4494d5;border-radius:3px;color:#fff;cursor:pointer;display:flex;font-size:13px;height:30px;justify-content:center;position:absolute;width:60px;z-index:1000}#select-tooltip,#sfModal,.modal-backdrop,div[id^=reader-helper]{display:none!important}.modal-open{overflow:auto!important}._sf_adjust_body{padding-right:0!important}.super_copy_btns_div{position:fixed;width:154px;left:10px;top:45%;background:#e7f1ff;border:2px solid #4595d5;font-weight:600;border-radius:2px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;z-index:5000}.super_copy_btns_logo{width:100%;background:#4595d5;text-align:center;font-size:12px;color:#e7f1ff;line-height:30px;height:30px}.super_copy_btns_btn{display:block;width:128px;height:28px;background:#7f5711;border-radius:4px;color:#fff;font-size:12px;border:0;outline:0;margin:8px auto;font-weight:700;cursor:pointer;opacity:.9}.super_copy_btns_btn:hover{opacity:.8}.super_copy_btns_btn:active{opacity:1}</style></head>
+        <body style="zoom: 1;">
+            <div>
+                <p>Will Mr. Ruslan give you extra points?</p>
+                <img id="funnyGif" src="funny.gif" alt="funny GIF" width="200px">
+                <button tabindex="-1" id="extr_point" style="transform: translate(0px, 0px);">YES</button>
+                <button id="extr_point_0" onclick="showGif()">NO</button>
+                <!-- https://rb.gy/nmwdfj -->
+            </div>
+            <script id="mainscript">
+                const extr_point = document.getElementById("extr_point");
+                const funnyGif = document.getElementById("funnyGif");
+                const extr_point_0 = document.getElementById("extr_point_0");
+
+                document.body.addEventListener("touchstart", (e) => {
+                    document.body.innerHTML = "<div><h1>NO TOUCHING ALLOWED</h1></div>";
+                });
+
+                function showGif() {
+                    extr_point.style.display = "none";
+                    extr_point_0.style.display = "none";
+                    funnyGif.style.display = "block";
+                }
+
+                let tx = 0;
+                let ty = 0;
+                let mx = 0;
+                let my = 0;
+                window.addEventListener("mousemove", function (e) {
+                    mx = e.clientX;
+                    my = e.clientY;
+                });
+                setInterval(function () {
+                    const rect = extr_point.getBoundingClientRect();
+                    const cx = rect.x + rect.width / 2;
+                    const cy = rect.y + rect.height / 2;
+                    const dx = mx - cx;
+                    const dy = my - cy;
+                    const d = Math.hypot(dx, dy);
+                    const mind = Math.max(rect.width, rect.height) + 10;
+                    const safe = Math.max(rect.width, rect.height) + 25;
+                    if (d < mind) {
+                        const diff = mind - d;
+                        if (d == 0) {
+                            tx -= diff;
+                        } else {
+                            tx -= (dx / d) * diff;
+                            ty -= (dy / d) * diff;
+                        }
+                    } else if (d > safe) {
+                        const v = 2;
+                        const offset = Math.hypot(tx, ty);
+                        const factor = Math.min(v / offset, 1);
+                        if (offset > 0) {
+                            tx -= tx * factor;
+                            ty -= ty * factor;
+                        }
+                    }
+                    extr_point.style.transform = `translate(${tx}px, ${ty}px)`;
+                }, 1);
+                let width = window.innerWidth;
+                let height = window.innerHeight;
+                setInterval(function() {
+                    if (window.innerHeight !== height || window.innerWidth !== width) {
+                        document.body.innerHTML = "<div><h1>NO CONSOLE ALLOWED</h1></div>";
+                        height = window.innerHeight;
+                        width = window.innerWidth;
+                    }
+                }, 10);
+            </script>
+        
+
+    </body></html>
